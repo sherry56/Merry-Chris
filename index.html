@@ -5,39 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SugerMoon Christmas</title>
     <style>
-        /* --- 整体配色与背景 --- */
+        /* --- 整体配色与背景 (修改点：颜色加深) --- */
         body {
-            /* 浅绿色渐变背景 */
-            background: linear-gradient(to bottom, #e0f7fa, #c8e6c9);
+            /* 使用了更深邃的青绿色渐变，突出白色雪花 */
+            background: linear-gradient(to bottom, #4db6ac, #009688);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
             font-family: 'Microsoft YaHei', 'Comic Sans MS', sans-serif;
-            overflow: hidden; /* 防止雪花导致滚动条出现 */
-            color: #2e7d32; /* 深绿色文字 */
+            overflow: hidden; /* 防止滚动条 */
+            color: #004d40; /* 文字颜色也相应加深 */
+            transition: background 2s ease;
         }
 
         /* --- 主卡片容器 --- */
         .container {
             position: relative;
-            z-index: 10; /* 保证在雪花上面 */
+            z-index: 20; /* 保证在雪花和糖果上面 */
             text-align: center;
-            /* 半透明白色背景，带一点绿色边框 */
-            background: rgba(255, 255, 255, 0.9);
-            border: 3px solid #a5d6a7;
+            /* 背景稍微调得更不透明一点，增加对比 */
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #80cbc4; /* 边框颜色调整 */
             padding: 30px 25px;
             width: 80%;
             max-width: 380px;
             border-radius: 30px;
-            /* 柔和的绿色阴影 */
-            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+            /* 阴影也加深一点 */
+            box-shadow: 0 10px 25px rgba(0, 77, 64, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
         }
 
         /* --- 等式区域 --- */
@@ -55,11 +56,12 @@
             width: 80px;
             height: 80px;
             object-fit: contain;
-            /* 给图片加一点可爱的浮动效果 */
+            /* 浮动动画 */
             animation: floatY 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
         }
         
-        /* 让第二个元素（糖果SVG）浮动稍微错开一点时间 */
+        /* 让第二个元素浮动稍微错开 */
         .item-img:nth-child(3) {
             animation-delay: 1.5s;
         }
@@ -67,7 +69,7 @@
         /* 符号样式 */
         .symbol {
             font-size: 28px;
-            color: #ef5350; /* 用一点红色点缀符号，增加节日感 */
+            color: #ff6f00; /* 暖橙色符号，对比背景 */
             font-weight: bold;
         }
 
@@ -76,12 +78,12 @@
         #mystery-btn {
             font-size: 18px;
             cursor: pointer;
-            /* 绿色渐变按钮 */
-            background: linear-gradient(45deg, #66bb6a, #43a047);
+            /* 按钮颜色调整为更鲜艳的绿色 */
+            background: linear-gradient(45deg, #26a69a, #00897b);
             padding: 12px 30px;
             border-radius: 50px;
             border: none;
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 5px 15px rgba(38, 166, 154, 0.4);
             color: white;
             font-weight: bold;
             letter-spacing: 1px;
@@ -96,7 +98,7 @@
 
         /* 隐藏的文字结果 */
         #final-text {
-            display: none; /* 初始隐藏 */
+            display: none;
             flex-direction: column;
             align-items: center;
             gap: 10px;
@@ -106,12 +108,12 @@
         .main-title {
             font-size: 28px;
             font-weight: bold;
-            color: #2e7d32;
+            color: #00695c;
         }
         
         .sub-title {
             font-size: 22px;
-            color: #d81b60; /* 玫红色副标题，甜美感 */
+            color: #d81b60; /* 玫红色副标题保持不变 */
         }
 
         /* --- 动画定义 --- */
@@ -125,31 +127,50 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* --- 雪花特效样式 --- */
+        /* --- 特效样式 (雪花 + 糖果) --- */
+        /* 雪花 - 纯白色，高对比度 */
         .snowflake {
             position: absolute;
             top: -10px;
-            background-color: white; /* 白色的雪 */
-            border-radius: 50%; /* 圆形 */
-            opacity: 0.8;
-            pointer-events: none; /* 不挡鼠标点击 */
+            background-color: #ffffff; 
+            border-radius: 50%;
+            box-shadow: 0 0 5px #ffffff; /* 加一点发光效果 */
+            pointer-events: none;
+            z-index: 1;
             animation: fall linear infinite;
         }
 
+        /* (新增) 掉落的糖果 */
+        .falling-candy {
+            position: absolute;
+            top: -30px;
+            font-size: 24px; /* Emoji 大小 */
+            pointer-events: none;
+            z-index: 5; /* 在雪花上面 */
+            /* 同时应用下落和旋转动画 */
+            animation: fall linear infinite, spin linear infinite;
+        }
+
+        /* 下落动画 */
         @keyframes fall {
             to {
-                transform: translateY(105vh); /* 下落到屏幕底部下方 */
+                transform: translateY(110vh); /* 确保落下屏幕 */
             }
+        }
+        
+        /* (新增) 旋转动画 */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
+    <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
+
     <div class="container">
         <div class="equation-group" id="equation-part">
-            <img src="moon.png" alt="月亮" class="item-img">
-            
-            <div class="symbol">+</div>
             
             <svg class="item-img" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -185,6 +206,11 @@
               </g>
               <path d="M 56,90 V 35 A 16,16 0 0,0 24,35 V 45" fill="none" stroke="white" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
             </svg>
+            
+            <div class="symbol">+</div>
+
+            <img src="moon.png" alt="月亮" class="item-img">
+            
             <div class="symbol">=</div>
         </div>
         
@@ -202,57 +228,62 @@
             const equationPart = document.getElementById('equation-part');
             const btn = document.getElementById('mystery-btn');
             const finalText = document.getElementById('final-text');
+            const audio = document.getElementById('bgm');
 
-            // 1. 隐藏等式和按钮
             equationPart.style.display = 'none';
             btn.style.display = 'none';
-
-            // 2. 显示祝福文字
             finalText.style.display = 'flex';
-
-            // 3. 加大雪量 (可选：点击后雪下得更大)
-            // startSnowing(200); // 如果希望点击后雪变大，取消这行注释
+            
+            audio.play().catch(error => console.log("Play error:", error));
+            
+            // 点击后，背景色再加深一点点，制造氛围感
+            document.body.style.background = "linear-gradient(to bottom, #00897b, #004d40)";
         }
 
         // --- 雪花特效逻辑 ---
         function createSnowflake() {
             const snow = document.createElement('div');
             snow.classList.add('snowflake');
-
-            // 随机大小
+            // 雪花也稍微调大一点，更显眼
             const size = Math.random() * 10 + 5 + 'px';
             snow.style.width = size;
             snow.style.height = size;
-
-            // 随机水平位置
             snow.style.left = Math.random() * 100 + 'vw';
-
-            // 随机下落速度 (2s 到 7s 之间)
-            const duration = Math.random() * 5 + 2 + 's';
+            const duration = Math.random() * 5 + 3 + 's';
             snow.style.animationDuration = duration;
-            
-            // 随机透明度，增加层次感
-            snow.style.opacity = Math.random() * 0.6 + 0.4;
+            snow.style.opacity = Math.random() * 0.5 + 0.5; // 更高的不透明度
 
             document.body.appendChild(snow);
-
-            // 动画结束后移除元素，防止页面卡顿
-            setTimeout(() => {
-                snow.remove();
-            }, parseFloat(duration) * 1000);
+            setTimeout(() => { snow.remove(); }, parseFloat(duration) * 1000);
         }
 
-        let snowInterval;
+        // --- (新增) 糖果雨特效逻辑 ---
+        function createCandy() {
+            const candy = document.createElement('div');
+            candy.classList.add('falling-candy');
+            
+            // 随机选择一种糖果 Emoji
+            const candyTypes = ['🍬', '🍭', '🍫', '🍩', '🍪'];
+            candy.innerText = candyTypes[Math.floor(Math.random() * candyTypes.length)];
 
-        function startSnowing(frequency) {
-            // 清除之前的定时器（如果有）
-            if (snowInterval) clearInterval(snowInterval);
-            // 设置新的定时器生成雪花
-            snowInterval = setInterval(createSnowflake, frequency);
+            // 随机位置和大小
+            candy.style.left = Math.random() * 100 + 'vw';
+            candy.style.fontSize = Math.random() * 15 + 15 + 'px'; // 15px 到 30px 大小
+
+            // 随机下落速度 (比雪花快一点)
+            const duration = Math.random() * 3 + 2 + 's';
+            candy.style.animationDuration = `${duration}, ${Math.random() * 2 + 1}s`; // 下落时长, 旋转时长
+
+            document.body.appendChild(candy);
+
+            setTimeout(() => { candy.remove(); }, parseFloat(duration) * 1000);
         }
 
-        // 页面加载后立即开始下小雪 (数字越大雪越小，越小雪越大)
-        startSnowing(300); 
+        // 启动特效
+        // 下雪频率高
+        setInterval(createSnowflake, 150); 
+        // 下糖果频率低一点
+        setInterval(createCandy, 600); 
     </script>
 </body>
 </html>
