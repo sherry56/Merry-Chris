@@ -7,7 +7,7 @@
     <style>
         /* --- 整体配色与背景 --- */
         body {
-            /* 深邃的青绿色渐变背景 */
+            /* 圣诞主题绿色渐变背景 */
             background: linear-gradient(to bottom, #1a472a, #2e7d32);
             display: flex;
             justify-content: center;
@@ -16,7 +16,7 @@
             margin: 0;
             font-family: 'Microsoft YaHei', 'Comic Sans MS', sans-serif;
             overflow: hidden;
-            color: #004d40;
+            color: #ffffff; /* 改为白色文字，在深绿色背景上更清晰 */
             transition: background 2s ease;
         }
 
@@ -26,12 +26,12 @@
             z-index: 20;
             text-align: center;
             background: rgba(255, 255, 255, 0.95);
-            border: 3px solid #80cbc4;
-            padding: 30px 20px; /*稍微减小内边距以容纳视频 */
+            border: 3px solid #1a472a; /* 改为圣诞绿边框 */
+            padding: 30px 20px;
             width: 85%;
             max-width: 400px;
             border-radius: 30px;
-            box-shadow: 0 10px 25px rgba(0, 77, 64, 0.3);
+            box-shadow: 0 10px 25px rgba(26, 71, 42, 0.3); /* 改为圣诞绿阴影 */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -58,7 +58,7 @@
 
         /* 图片和SVG通用样式 */
         .item-img {
-            width: 70px; /*稍微调小一点 */
+            width: 70px;
             height: 70px;
             object-fit: contain;
             animation: floatY 3s ease-in-out infinite;
@@ -71,18 +71,18 @@
 
         .symbol {
             font-size: 24px;
-            color: #ff6f00;
+            color: #ff6f00; /* 保持橙色作为点缀色 */
             font-weight: bold;
         }
 
         #mystery-btn {
             font-size: 18px;
             cursor: pointer;
-            background: linear-gradient(45deg, #1a472a, #2e7d32);
+            background: linear-gradient(45deg, #1a472a, #2e7d32); /* 改为圣诞绿渐变 */
             padding: 12px 30px;
             border-radius: 50px;
             border: none;
-            box-shadow: 0 5px 15px rgba(38, 166, 154, 0.4);
+            box-shadow: 0 5px 15px rgba(26, 71, 42, 0.4); /* 改为圣诞绿阴影 */
             color: white;
             font-weight: bold;
             letter-spacing: 1px;
@@ -115,12 +115,12 @@
         .main-title {
             font-size: 26px;
             font-weight: bold;
-            color: #00695c;
+            color: #1a472a; /* 改为深圣诞绿 */
         }
         
         .sub-title {
             font-size: 20px;
-            color: #d81b60;
+            color: #d81b60; /* 保持粉色，作为圣诞点缀色 */
         }
 
         /* 视频样式 */
@@ -190,8 +190,8 @@
                       <stop offset="100%" style="stop-color:#D32F2F;stop-opacity:1" />
                     </linearGradient>
                     <linearGradient id="bowGreen" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" style="stop-color:#66BB6A;stop-opacity:1" />
-                      <stop offset="100%" style="stop-color:#388E3C;stop-opacity:1" />
+                      <stop offset="0%" style="stop-color:#1a472a;stop-opacity:1" /> <!-- 改为圣诞绿 -->
+                      <stop offset="100%" style="stop-color:#2e7d32;stop-opacity:1" /> <!-- 改为圣诞绿 -->
                     </linearGradient>
                     <path id="canePath" d="M 60,95 V 35 A 20,20 0 0,0 20,35 V 50" fill="none" stroke-width="14" stroke-linecap="round"/>
                     <clipPath id="caneClip"><use href="#canePath" stroke="white" /></clipPath>
@@ -211,7 +211,7 @@
                   <g transform="translate(40, 55)" fill="url(#bowGreen)">
                     <ellipse cx="-8" cy="0" rx="10" ry="6" transform="rotate(-20)"/>
                     <ellipse cx="8" cy="0" rx="10" ry="6" transform="rotate(20)"/>
-                    <circle cx="0" cy="0" r="4" fill="#2E7D32"/>
+                    <circle cx="0" cy="0" r="4" fill="#2E7D32"/> <!-- 改为圣诞绿 -->
                     <path d="M -2,2 Q -8,15 -12,18 L -8,20 Q -4,15 2,2 Z" />
                     <path d="M 2,2 Q 8,15 12,18 L 8,20 Q 4,15 -2,2 Z" />
                   </g>
@@ -258,7 +258,7 @@
                 console.log("自动播放被拦截，等待用户手动点击播放:", error);
             });
 
-            // 4. 背景加深
+            // 4. 背景加深 (改为圣诞绿渐变)
             document.body.style.background = "linear-gradient(to bottom, #0f2b1a, #1a472a)";
         }
 
@@ -295,6 +295,3 @@
     </script>
 </body>
 </html>
-
-
-
