@@ -124,31 +124,45 @@
         /* --- 特效样式 --- */
         .snowflake {
             position: absolute;
-            top: -10px;
+            top: -20px; /* 初始位置稍微提高 */
             background-color: #ffffff; 
             border-radius: 50%;
             box-shadow: 0 0 5px #ffffff;
             pointer-events: none;
             z-index: 1;
-            animation: fall linear infinite;
+            /* 雪花只需要下落 */
+            animation-name: fallOnly;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
         }
 
+        /* 【修改点】糖果样式 */
         .falling-candy {
             position: absolute;
-            top: -30px;
+            top: -30px; /* 初始位置在屏幕外上方 */
             font-size: 24px;
             pointer-events: none;
             z-index: 5;
-            animation: fall linear infinite, spin linear infinite;
+            /* 【修改点】应用合并后的下落+旋转动画 */
+            animation-name: fallAndSpin;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
         }
 
-        @keyframes fall {
+        /* 【修改点】雪花单独的下落动画 */
+        @keyframes fallOnly {
             to { transform: translateY(110vh); }
         }
         
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* 【修改点】合并后的糖果动画：一边下落一边旋转 */
+        @keyframes fallAndSpin {
+            from {
+                transform: translateY(0) rotate(0deg);
+            }
+            to {
+                /* 下落到屏幕下方，同时旋转一圈 */
+                transform: translateY(110vh) rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -216,21 +230,14 @@
             const finalText = document.getElementById('final-text');
             const audio = document.getElementById('audio-msg');
 
-            // 1. 隐藏等式和按钮
             equationPart.style.display = 'none';
             btn.style.display = 'none';
-            
-            // 2. 显示祝福
             finalText.style.display = 'flex';
-            
-            // 3. 播放音频 (只播放一次)
             audio.play().catch(error => console.log("Play error:", error));
-            
-            // 4. 背景加深
             document.body.style.background = "linear-gradient(to bottom, #00897b, #004d40)";
         }
 
-        // --- 特效逻辑 (保持不变) ---
+        // --- 特效逻辑 ---
         function createSnowflake() {
             const snow = document.createElement('div');
             snow.classList.add('snowflake');
@@ -239,6 +246,7 @@
             snow.style.height = size;
             snow.style.left = Math.random() * 100 + 'vw';
             const duration = Math.random() * 5 + 3 + 's';
+            // 【修改点】 JS 只需设置一个时间
             snow.style.animationDuration = duration;
             snow.style.opacity = Math.random() * 0.5 + 0.5;
 
@@ -254,7 +262,8 @@
             candy.style.left = Math.random() * 100 + 'vw';
             candy.style.fontSize = Math.random() * 15 + 15 + 'px';
             const duration = Math.random() * 3 + 2 + 's';
-            candy.style.animationDuration = `${duration}, ${Math.random() * 2 + 1}s`;
+            // 【修改点】 JS 只需设置一个时间，同时控制下落和旋转快慢
+            candy.style.animationDuration = duration;
 
             document.body.appendChild(candy);
             setTimeout(() => { candy.remove(); }, parseFloat(duration) * 1000);
